@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>CalendarioJPB</title>
+	<h:outputScript library="js" name="scripts.js" />
+</h:head>
+<h:body>
+
+	<h:form>
+		Clique <p:commandLink value="Aqui"
+			actionListener="#{MBsolicitacao.prepararSolicitacao()}"
+			oncomplete="PF('Solicitacao').show();" update=":frmsol:pgsol" /> para fazer sua solicitação.
+		
+			<h:graphicImage library="images" name="novomodelo.png" width="100%" height="100%" />
+	</h:form>
+
+	<p:growl id="msgGlobal" sticky="true" />
+	<!-- adicionar solicitação -->
+	<p:dialog widgetVar="Solicitacao" header="Nova solicitação"
+		closable="false" resizable="false" draggable="false">
+		<h:form id="frmsol">
+			<h:panelGrid id="pgsol" columns="2">
+				<p:outputLabel for="nome" value="Nome: " />
+				<p:inputText id="nome" maxlength="50" size="30"
+					value="#{MBsolicitacao.solicitcao.nome}" required="true"
+					requiredMessage="O campo nome é obrigatório." />
+
+				<p:outputLabel for="tel" value="Telefone: " />
+				<p:inputMask id="tel" mask="?(99)99999-9999" maxlength="50"
+					size="30" value="#{MBsolicitacao.solicitcao.telefone}"
+					required="true" requiredMessage="O campo telefone é obrigatório." />
+
+				<p:outputLabel for="em" value="Email: " />
+				<p:inputText id="em" maxlength="50" size="30"
+					value="#{MBsolicitacao.solicitcao.email}" required="true"
+					requiredMessage="O campo email é obrigatório." />
+
+				<p:outputLabel for="end" value="Endereço do problema: " />
+				<p:inputText id="end" maxlength="50" size="30"
+					value="#{MBsolicitacao.solicitcao.endereco}" required="true"
+					requiredMessage="O campo endereço é obrigatório." />
+
+				<p:outputLabel for="desc" value="Descrição do Problema" />
+				<p:inputTextarea rows="4" cols="28" id="desc" maxlength="100"
+					value="#{MBsolicitacao.solicitcao.descricao}" required="true"
+					requiredMessage="O campo descrição é obrigatório." />
+			</h:panelGrid>
+
+			<h:panelGrid columns="2">
+				<p:commandButton value="Enviar"
+					actionListener="#{MBsolicitacao.salvar()}"
+					oncomplete="verificar(xhr, status, args, 'Solicitacao');"
+					update=":msgGlobal" />
+				<p:commandButton value="Cancelar"
+					onclick="PF('Solicitacao').hide();" />
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+</h:body>
+</html>
